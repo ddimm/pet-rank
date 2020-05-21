@@ -1,4 +1,5 @@
 const firebase = require("firebase");
+const firebaseui = require("firebaseui");
 // Required for side-effects
 require("firebase/firestore");
 
@@ -10,4 +11,6 @@ const config = {
 };
 
 firebase.initializeApp(config);
-export default firebase;
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+export { firebase, ui };

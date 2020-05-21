@@ -1,4 +1,11 @@
 import React from "react";
+
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import Header from "./components/Header";
+import { reducer } from "./utils/reducers";
+
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Grommet } from "grommet";
 import Account from "./components/Account";
@@ -9,6 +16,7 @@ import Navbar from "./components/Navbar";
 import Create from "./components/Create";
 import "./App.css";
 
+const store = createStore(reducer);
 const theme = {
   global: {
     colors: { brand: "#228BE6" },
@@ -21,6 +29,12 @@ const theme = {
 };
 function App() {
   return (
+
+    
+     
+
+=======
+    <Provider store={store}>
     <Grommet theme={theme}>
       <Router>
         <Navbar />
@@ -29,8 +43,12 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/saved" component={Saved} />
         <Route exact path="/create" component={Create} />
+     <Header />
       </Router>
+    
     </Grommet>
+        </Provider>
+
   );
 }
 
