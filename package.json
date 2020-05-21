@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "firebase": "^7.14.4",
+    "grommet": "^2.13.0",
+    "polished": "^3.6.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "styled-components": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
