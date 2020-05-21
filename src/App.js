@@ -1,17 +1,24 @@
-import React from 'react';
+import React from "react";
+import { Grommet, Header, Button, Menu } from "grommet";
+
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import Account from "./components/Account";
+import Homepage from "./components/Homepage";
+import Login from "./components/Login";
+import Saved from "./components/Saved";
+import Navbar from "./components/Navbar";
+
+import "./App.css";
 
 function App() {
   return (
-    <div style={{ textAlign: 'center' }}>
-      <header>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar />
+      <Route exact path="/" component={Homepage} />
+      <Route exact path="/account" component={Account} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/saved" component={Saved} />
+    </Router>
   );
 }
 
