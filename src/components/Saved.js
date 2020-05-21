@@ -1,7 +1,5 @@
 import React from "react";
 
-function Saved(props) {
+export default function Saved(props) {
   return <div>Saved images</div>;
 }
-
-export default Saved;
