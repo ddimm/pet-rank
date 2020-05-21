@@ -1,7 +1,5 @@
 import React from "react";
-import { Grommet, Header, Button, Menu } from "grommet";
-
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Account from "./components/Account";
 import Homepage from "./components/Homepage";
 import Login from "./components/Login";

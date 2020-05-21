@@ -1,6 +1,7 @@
 import React from "react";
-import { Grommet, Header, Button, Menu } from "grommet";
-import { Home } from "grommet-icons";
+import { Grommet, Header, Button } from "grommet";
+import { Home, User, Bookmark } from "grommet-icons";
+import { Link } from "react-router-dom";
 
 const theme = {
   global: {
@@ -16,8 +17,15 @@ export default function Navbar() {
   return (
     <Grommet theme={theme}>
       <Header background="brand">
-        <Button icon={<Home />} hoverIndicator />
-        <Menu label="account" items={[{ label: "logout" }]} />
+        <Link to="/">
+          <Button icon={<Home />} hoverIndicator />
+        </Link>
+        <Link to="/saved">
+          <Button icon={<Bookmark />} hoverIndicator />
+        </Link>
+        <Link to="/account">
+          <Button icon={<User />} hoverIndicator />
+        </Link>
       </Header>
     </Grommet>
   );

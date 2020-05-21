@@ -1,7 +1,7 @@
 import React from "react";
 
-function Account(props) {
-  return <div></div>;
+function Account() {
+  return <div>Account info</div>;
 }
 
 export default Account;
