@@ -1,17 +1,16 @@
-import React from 'react';
+import React from "react";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import Header from "./components/Header";
+import { reducer } from "./utils/reducers";
+
+const store = createStore(reducer);
 
 function App() {
   return (
-    <div style={{ textAlign: 'center' }}>
-      <header>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Header />
+    </Provider>
   );
 }
 
