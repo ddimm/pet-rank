@@ -44,6 +44,7 @@ export default function Create() {
   };
 
   const handleImageChange = (nextValue) => {
+    console.log(nextValue);
     setImagePost(nextValue);
   };
 
@@ -105,7 +106,7 @@ export default function Create() {
             onChange={handleTextChange}
             onSubmit={handleTextSubmit}
           >
-            <FormField name="textTitle" label="Title" required={true}>
+            <FormField name="title" label="Title" required={true}>
               <TextInput name="title" />
             </FormField>
             <FormField name="body" label="Body" required={false}>
@@ -120,16 +121,17 @@ export default function Create() {
             onSubmit={handleImageSubmit}
             onChange={handleImageChange}
           >
-            <FormField name="imageTitle" label="Title" required={true}>
+            <FormField name="title" label="Title" required={true}>
               <TextInput name="title" />
-              <input
-                type="file"
-                name="file"
-                onChange={(e) => {
-                  setImagePost({ ...imagePost, file: e.target.files[0] });
-                }}
-              ></input>
             </FormField>
+
+            <input
+              type="file"
+              name="file"
+              onChange={(e) => {
+                setImagePost({ ...imagePost, file: e.target.files[0] });
+              }}
+            ></input>
 
             <Button type="submit" primary label="Post" />
           </Form>

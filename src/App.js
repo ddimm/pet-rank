@@ -1,4 +1,4 @@
-import { Grommet } from "grommet";
+import { Grommet, Box } from "grommet";
 import React from "react";
 import { Provider, useSelector } from "react-redux";
 import {
@@ -36,22 +36,26 @@ function App() {
     <Provider store={store}>
       <Grommet theme={theme}>
         <Router>
-          <Navbar />
-          <Switch>
-            <Route exact path="/" component={Homepage} />
-            <Route exact path="/login" component={Login} />
+          <Box fill>
+            <Navbar />
+            <Box flex overflow="auto">
+              <Switch>
+                <Route exact path="/" component={Homepage} />
+                <Route exact path="/login" component={Login} />
 
-            <PrivateRoute exact path="/saved">
-              <Saved />
-            </PrivateRoute>
+                <PrivateRoute exact path="/saved">
+                  <Saved />
+                </PrivateRoute>
 
-            <PrivateRoute exact path="/create">
-              <Create />
-            </PrivateRoute>
-            <PrivateRoute exact path="/account">
-              <Account />
-            </PrivateRoute>
-          </Switch>
+                <PrivateRoute exact path="/create">
+                  <Create />
+                </PrivateRoute>
+                <PrivateRoute exact path="/account">
+                  <Account />
+                </PrivateRoute>
+              </Switch>
+            </Box>
+          </Box>
         </Router>
       </Grommet>
     </Provider>

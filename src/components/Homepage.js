@@ -30,17 +30,11 @@ export default function Homepage() {
       {posts &&
         posts.map((post, index) => {
           if (post.type === "text") {
-            return <Post key={index} title={post.title} body={post.body} />;
+            return <Post key={index} post={post} />;
           } else if (post.type === "image") {
-            return (
-              <ImagePost
-                key={index}
-                title={post.title}
-                imageUrl={post.fileUrl}
-              />
-            );
+            return <ImagePost key={index} post={post} />;
           } else {
-            return <Post key={index} title={"Error"} body={"error"} />;
+            return <Post key={index} post={post} />;
           }
         })}
       {posts && posts.length === 0 && <Text>No posts :(</Text>}
