@@ -4,31 +4,31 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 exports.updatePointsOnHour = functions.pubsub
-  .schedule("every 5 minutes")
+  .schedule("every 2 minutes")
   .onRun((context) => {
     console.log(context);
     let db = admin.firestore();
     let batch = db.batch();
     let postRef = db.collection("posts");
-    return postRef
+    return db
+      .collection("posts")
       .where(
         "dateCreated",
         "<",
         admin.firestore.Timestamp.fromDate(new Date(Date.now() - 3600000))
       )
-      .orderBy("points", "desc")
       .get()
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
-          batch.update(doc, {
+          console.log(`down voting ${doc.id}`);
+          batch.update(doc.id, {
             points: admin.firestore.FieldValue.increment(-1),
           });
-          console.log(`update ${doc.id}`);
         });
-
+        console.log("down voting batched");
         return batch.commit();
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(JSON.stringify(err, undefined, 4));
       });
   });
