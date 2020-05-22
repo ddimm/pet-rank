@@ -1,19 +1,21 @@
-import React from "react";
-
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import Header from "./components/Header";
-import { reducer } from "./utils/reducers";
-
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Grommet } from "grommet";
+import React from "react";
+import { Provider, useSelector } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import { createStore } from "redux";
+import "./App.css";
 import Account from "./components/Account";
+import Create from "./components/Create";
 import Homepage from "./components/Homepage";
 import Login from "./components/Login";
-import Saved from "./components/Saved";
 import Navbar from "./components/Navbar";
-import Create from "./components/Create";
-import "./App.css";
+import Saved from "./components/Saved";
+import { reducer } from "./utils/reducers";
 
 const store = createStore(reducer);
 const theme = {
@@ -32,15 +34,42 @@ function App() {
       <Grommet theme={theme}>
         <Router>
           <Navbar />
-          <Route exact path="/" component={Homepage} />
-          <Route exact path="/account" component={Account} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/saved" component={Saved} />
-          <Route exact path="/create" component={Create} />
-          <Header />
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/login" component={Login} />
+
+            <PrivateRoute exact path="/saved">
+              <Saved />
+            </PrivateRoute>
+
+            <PrivateRoute exact path="/create">
+              <Create />
+            </PrivateRoute>
+            <PrivateRoute exact path="/account">
+              <Account />
+            </PrivateRoute>
+          </Switch>
         </Router>
       </Grommet>
     </Provider>
+  );
+}
+
+function PrivateRoute({ children, ...rest }) {
+  const login = useSelector((state) => state.login);
+  return (
+    <Route
+      {...rest}
+      render={({ location }) => {
+        if (login) {
+          return children;
+        } else {
+          return (
+            <Redirect to={{ pathname: "/login", state: { from: location } }} />
+          );
+        }
+      }}
+    />
   );
 }
 
