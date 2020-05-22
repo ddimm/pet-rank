@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Box, Heading, Paragraph, Stack, Button } from "grommet";
 import { Dislike, Like, Bookmark } from "grommet-icons";
+import { firebase } from "../utils/firebase";
+
+const db = firebase.firestore();
+const auth = firebase.auth();
 
 const statusTypes = {
   LIKED: "liked",
@@ -8,7 +12,7 @@ const statusTypes = {
   DEFAULT: "default",
 };
 
-export default function Post({ title, body }) {
+export default function Post({ post }) {
   const [status, setStatus] = useState(statusTypes.DEFAULT);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -23,7 +27,6 @@ export default function Post({ title, body }) {
   const handleLike = () => {
     if (isLiked()) setStatus(statusTypes.DEFAULT);
     else setStatus(statusTypes.LIKED);
-    console.log("liked!", status);
   };
 
   const handleDislike = () => {
@@ -32,6 +35,33 @@ export default function Post({ title, body }) {
   };
 
   const handleSave = () => {
+    if (!isSaved) {
+      db.collection("users")
+        .doc(auth.currentUser.uid)
+        .collection("saved")
+        .doc(post.id)
+        .set({
+          ...post,
+        })
+        .then(() => {
+          console.log("Post successfully saved!");
+        })
+        .catch((error) => {
+          console.error("Error saving post: ", error);
+        });
+    } else {
+      db.collection("users")
+        .doc(auth.currentUser.uid)
+        .collection("saved")
+        .doc(post.id)
+        .delete()
+        .then(() => {
+          console.log("Post successfully saved!");
+        })
+        .catch((error) => {
+          console.error("Error saving post: ", error);
+        });
+    }
     setIsSaved(!isSaved);
   };
 
@@ -47,8 +77,8 @@ export default function Post({ title, body }) {
       <Stack anchor="top-right">
         <Stack anchor="bottom-right">
           <Box>
-            <Heading>{title}</Heading>
-            <Paragraph>{body}</Paragraph>
+            <Heading>{post.title}</Heading>
+            <Paragraph>{post.body}</Paragraph>
           </Box>
           <Box direction="row" gap="medium">
             <Button
@@ -56,6 +86,7 @@ export default function Post({ title, body }) {
               hoverIndicator
               onClick={handleLike}
             />
+            {post.points}
             <Button
               icon={
                 <Dislike

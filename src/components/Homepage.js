@@ -7,27 +7,25 @@ import ImagePost from "./ImagePost";
 const db = firebase.firestore();
 
 export default function Homepage() {
+  // const login = useSelector((state) => state.login);
+
   const [posts, setPosts] = useState();
   useEffect(() => {
-    db.collection("posts").onSnapshot((querySnapshot) => {
-      let postsTemp = [];
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, doc.data());
-        postsTemp.push(doc.data());
-      });
-      setPosts(postsTemp);
-    });
+    db.collection("posts")
+      .get()
+      .then((querySnapshot) => {
+        let postsTemp = [];
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, doc.data());
+          postsTemp.push({ ...doc.data(), id: doc.id });
+        });
+        setPosts(postsTemp);
+      })
+      .catch(console.log("Couldn't load posts"));
   }, []);
 
   return (
     <Box>
-      {/* <Post
-        title="This is a title"
-        body="Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua."
-      /> */}
       {!posts && <Text>Loading...</Text>}
       {posts &&
         posts.map((post, index) => {

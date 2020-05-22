@@ -9,6 +9,7 @@ import {
   FormField,
   TextInput,
 } from "grommet";
+import { useHistory } from "react-router-dom";
 import { firebase } from "../utils/firebase";
 import { v4 as uuidv4 } from "uuid";
 const storeageRef = firebase.storage().ref();
@@ -18,6 +19,7 @@ export default function Create() {
   const handleTextChange = (nextValue) => {
     setTextPost(nextValue);
   };
+  const history = useHistory();
   const handleTextSubmit = () => {
     //write post to firestore
     firebase
@@ -38,11 +40,13 @@ export default function Create() {
       .catch(() => {
         console.log("text post not submitted");
       });
+    history.push("/");
   };
 
   const handleImageChange = (nextValue) => {
     setImagePost(nextValue);
   };
+
   const handleImageSubmit = () => {
     console.log(imagePost);
 
@@ -91,6 +95,7 @@ export default function Create() {
       }
     );
   };
+
   return (
     <Box margin="large">
       <Tabs>
@@ -100,10 +105,10 @@ export default function Create() {
             onChange={handleTextChange}
             onSubmit={handleTextSubmit}
           >
-            <FormField name="textTitle" label="Title">
+            <FormField name="textTitle" label="Title" required={true}>
               <TextInput name="title" />
             </FormField>
-            <FormField name="body" label="Body">
+            <FormField name="body" label="Body" required={false}>
               <TextArea name="body" />
             </FormField>
             <Button type="submit" primary label="Post" />
@@ -115,7 +120,7 @@ export default function Create() {
             onSubmit={handleImageSubmit}
             onChange={handleImageChange}
           >
-            <FormField name="imageTitle" label="Title">
+            <FormField name="imageTitle" label="Title" required={true}>
               <TextInput name="title" />
               <input
                 type="file"
