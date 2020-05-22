@@ -13,7 +13,7 @@ export default function Navbar() {
     dispatch(setLogin(!!user));
   });
   useEffect(() => {
-    return firebase
+    firebase
       .firestore()
       .collection("posts")
       .orderBy("points", "desc")

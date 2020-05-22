@@ -21,7 +21,7 @@ exports.updatePointsOnHour = functions.pubsub
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
           console.log(`down voting ${doc.id}`);
-          batch.update(doc.id, {
+          batch.update(doc, {
             points: admin.firestore.FieldValue.increment(-1),
           });
         });
