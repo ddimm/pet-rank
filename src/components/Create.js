@@ -15,11 +15,9 @@ export default function Create() {
   const [textPost, setTextPost] = useState({ title: "", body: "" });
   const [imagePost, setImagePost] = useState({ title: "" });
   const handleTextChange = (nextValue) => {
-    console.log(nextValue);
     setTextPost(nextValue);
   };
   const handleTextSubmit = () => {
-    console.log(textPost);
     //write post to firestore
     firebase
       .firestore()
@@ -28,6 +26,9 @@ export default function Create() {
       .set({
         userId: firebase.auth().currentUser.uid,
         dateCreated: firebase.firestore.Timestamp.fromDate(new Date()),
+        points: 10,
+        type: "text",
+        createdBy: firebase.auth().currentUser.displayName,
         ...textPost,
       })
       .then(() => {
@@ -39,7 +40,6 @@ export default function Create() {
   };
 
   const handleImageChange = (nextValue) => {
-    console.log(nextValue);
     setImagePost(nextValue);
   };
   const handleImageSubmit = () => {
