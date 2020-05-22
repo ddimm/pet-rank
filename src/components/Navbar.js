@@ -1,17 +1,33 @@
 import { Button, Header } from "grommet";
 import { Bookmark, Home, Upload, User } from "grommet-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setLogin } from "../utils/actions";
 import { firebase } from "../utils/firebase";
+import { setPosts } from "../utils/actions";
 
 export default function Navbar() {
   let dispatch = useDispatch();
   firebase.auth().onAuthStateChanged((user) => {
     dispatch(setLogin(!!user));
   });
-
+  useEffect(() => {
+    return firebase
+      .firestore()
+      .collection("posts")
+      .orderBy("points", "desc")
+      .onSnapshot((docs) => {
+        dispatch(
+          setPosts(
+            docs.docs.map((doc) => {
+              console.log(doc.data());
+              return doc.data();
+            })
+          )
+        );
+      });
+  }, [dispatch]);
   return (
     <Header background="brand" style={{ marginBottom: "2vh" }}>
       <Link to="/">

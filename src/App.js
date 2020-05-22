@@ -16,7 +16,6 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Saved from "./components/Saved";
 import { reducer } from "./utils/reducers";
-
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

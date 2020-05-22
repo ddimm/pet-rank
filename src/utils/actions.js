@@ -6,3 +6,10 @@ export function setLogin(login) {
     login,
   };
 }
+export const SET_HOME_POSTS = "SET_POSTS";
+export function setPosts(posts) {
+  return {
+    type: SET_HOME_POSTS,
+    posts,
+  };
+}
