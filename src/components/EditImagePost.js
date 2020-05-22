@@ -115,24 +115,28 @@ export default function EditImagePost({ post }) {
             onEsc={() => setEdit(false)}
             onClickOutside={() => setEdit(false)}
           >
-            <Form
-              value={newPost}
-              onChange={handlePostChange}
-              onSubmit={handleSave}
-            >
-              <FormField name="title" label="Title" required={true}>
-                <TextInput name="title" />
-              </FormField>
-              <input
-                type="file"
-                name="file"
-                onChange={(e) => {
-                  setNewPost({ ...newPost, file: e.target.files[0] });
-                }}
-              ></input>
-              <Button primary label="Save" onClick={handleSave} />
-              <Button label="Cancel" onClick={() => setEdit(false)} />
-            </Form>
+            <Box gap="small" margin="medium" width="40vw">
+              <Form
+                value={newPost}
+                onChange={handlePostChange}
+                onSubmit={handleSave}
+              >
+                <FormField name="title" label="Title" required={true}>
+                  <TextInput name="title" />
+                </FormField>
+                <input
+                  type="file"
+                  name="file"
+                  onChange={(e) => {
+                    setNewPost({ ...newPost, file: e.target.files[0] });
+                  }}
+                ></input>
+                <Box direction="row" gap="small" margin={{ top: "small" }}>
+                  <Button primary label="Save" onClick={handleSave} />
+                  <Button label="Cancel" onClick={() => setEdit(false)} />
+                </Box>
+              </Form>
+            </Box>
           </Layer>
         )}
       </Box>

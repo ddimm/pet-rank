@@ -87,20 +87,24 @@ export default function EditTextPost({ post }) {
             onEsc={() => setEdit(false)}
             onClickOutside={() => setEdit(false)}
           >
-            <Form
-              value={newPost}
-              onChange={handlePostChange}
-              onSubmit={handleSave}
-            >
-              <FormField name="title" label="Title" required={true}>
-                <TextInput name="title" />
-              </FormField>
-              <FormField name="body" label="Body" required={false}>
-                <TextArea name="body" />
-              </FormField>
-              <Button primary label="Save" type="submit" />
-              <Button label="Cancel" onClick={() => setEdit(false)} />
-            </Form>
+            <Box gap="small" margin="medium" width="40vw">
+              <Form
+                value={newPost}
+                onChange={handlePostChange}
+                onSubmit={handleSave}
+              >
+                <FormField name="title" label="Title" required={true}>
+                  <TextInput name="title" />
+                </FormField>
+                <FormField name="body" label="Body" required={false}>
+                  <TextArea name="body" />
+                </FormField>
+                <Box gap="small" direction="row">
+                  <Button primary label="Save" type="submit" />
+                  <Button label="Cancel" onClick={() => setEdit(false)} />
+                </Box>
+              </Form>
+            </Box>
           </Layer>
         )}
       </Box>

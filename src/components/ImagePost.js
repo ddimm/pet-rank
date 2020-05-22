@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Image, Stack } from "grommet";
+import { Box, Button, Heading, Image, Stack, Text } from "grommet";
 import { Bookmark, Dislike, Like } from "grommet-icons";
 import React, { useState } from "react";
 import { firebase } from "../utils/firebase";
@@ -143,7 +143,7 @@ export default function ImagePost({ post }) {
               hoverIndicator
               onClick={handleLike}
             />
-            {post.points}
+            <Text alignSelf="center">{post.points}</Text>
             <Button
               icon={
                 <Dislike
