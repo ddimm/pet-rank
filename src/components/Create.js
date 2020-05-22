@@ -95,6 +95,7 @@ export default function Create() {
         });
       }
     );
+    history.push("/");
   };
 
   return (

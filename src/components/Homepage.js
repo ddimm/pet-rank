@@ -9,6 +9,7 @@ export default function Homepage() {
   console.log(posts);
   return (
     <Box>
+      {!posts && <Text>Loading...</Text>}
       {posts &&
         posts.map((post, index) => {
           if (post.type === "text") {
@@ -19,7 +20,7 @@ export default function Homepage() {
             return <Post key={index} post={post} />;
           }
         })}
-      {posts.length === 0 && <Text>Loading...</Text>}
+      {posts && posts.length === 0 && <Text>No posts :(</Text>}
     </Box>
   );
 }

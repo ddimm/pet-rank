@@ -30,7 +30,10 @@ export default function Navbar() {
       });
   }, [dispatch]);
   return (
-    <Header background="brand" style={{ marginBottom: "2vh" }}>
+    <Header
+      background="brand"
+      style={{ marginBottom: "2vh", position: "sticky", top: 0, zIndex: 100 }}
+    >
       <Link to="/">
         <Button icon={<Home />} hoverIndicator />
       </Link>
