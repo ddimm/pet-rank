@@ -4,7 +4,9 @@ import { firebase } from "../utils/firebase";
 import AuthButton from "./AuthButton";
 import EditTextPost from "./EditTextPost";
 import EditImagePost from "./EditImagePost";
+
 const db = firebase.firestore();
+
 export default function Account() {
   const [posts, setPosts] = useState();
   useEffect(() => {
@@ -21,6 +23,7 @@ export default function Account() {
       })
       .catch(console.log("Couldn't load posts"));
   }, []);
+  if (!posts) return <Text>Loading...</Text>;
   return (
     <Box
       border={{ color: "brand", size: "xlarge" }}
@@ -35,10 +38,8 @@ export default function Account() {
       <AuthButton />
       <Heading>Your Posts</Heading>
 
-      {!posts && <Text>Loading...</Text>}
-      {posts && (
+      {posts.length !== 0 && (
         <Grid rows="small" columns="medium" gap="small">
-          {" "}
           {posts.map((post, index) => {
             if (post.type === "text")
               return <EditTextPost key={index} post={post} />;
@@ -46,9 +47,7 @@ export default function Account() {
           })}
         </Grid>
       )}
-      {posts && posts.length === 0 && (
-        <Text>You haven't posted anything yet!</Text>
-      )}
+      {posts.length === 0 && <Text>You haven't posted anything yet!</Text>}
     </Box>
   );
 }
