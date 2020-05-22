@@ -39,9 +39,10 @@ export default function Post({ title, body }) {
     <Box
       border={{ color: "brand", size: "medium" }}
       background="light-3"
-      elevation="small"
+      elevation="medium"
       margin={{ vertical: "medium", horizontal: "xlarge" }}
       pad="medium"
+      round="small"
     >
       <Stack anchor="top-right">
         <Stack anchor="bottom-right">
