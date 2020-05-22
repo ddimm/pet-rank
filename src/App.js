@@ -5,7 +5,6 @@ import { createStore } from "redux";
 import Header from "./components/Header";
 import { reducer } from "./utils/reducers";
 
-
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Grommet } from "grommet";
 import Account from "./components/Account";
@@ -29,26 +28,19 @@ const theme = {
 };
 function App() {
   return (
-
-    
-     
-
-=======
     <Provider store={store}>
-    <Grommet theme={theme}>
-      <Router>
-        <Navbar />
-        <Route exact path="/" component={Homepage} />
-        <Route exact path="/account" component={Account} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/saved" component={Saved} />
-        <Route exact path="/create" component={Create} />
-     <Header />
-      </Router>
-    
-    </Grommet>
-        </Provider>
-
+      <Grommet theme={theme}>
+        <Router>
+          <Navbar />
+          <Route exact path="/" component={Homepage} />
+          <Route exact path="/account" component={Account} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/saved" component={Saved} />
+          <Route exact path="/create" component={Create} />
+          <Header />
+        </Router>
+      </Grommet>
+    </Provider>
   );
 }
 
