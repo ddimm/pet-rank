@@ -4,7 +4,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 exports.updatePointsOnHour = functions.pubsub
-  .schedule("every 2 minutes")
+  .schedule("every 60 minutes")
   .onRun((context) => {
     console.log(context);
     let db = admin.firestore();
