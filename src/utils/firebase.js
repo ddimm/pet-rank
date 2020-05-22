@@ -1,4 +1,5 @@
 const firebase = require("firebase");
+const firebaseui = require("firebaseui");
 // Required for side-effects
 require("firebase/firestore");
 
@@ -7,7 +8,10 @@ const config = {
   authDomain: process.env.REACT_APP_authDomain,
   databaseURL: process.env.REACT_APP_databaseURL,
   projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
 };
 
 firebase.initializeApp(config);
-export default firebase;
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+export { firebase, ui };
