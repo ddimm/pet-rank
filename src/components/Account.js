@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, Text, Heading } from "grommet";
+import { Box, Text, Heading, Grid } from "grommet";
 import { firebase } from "../utils/firebase";
 import AuthButton from "./AuthButton";
-import Post from "./Post";
-import ImagePost from "./ImagePost";
+import EditTextPost from "./EditTextPost";
+import EditImagePost from "./EditImagePost";
+
 const db = firebase.firestore();
+
 export default function Account() {
   const [posts, setPosts] = useState();
   useEffect(() => {
@@ -21,6 +23,7 @@ export default function Account() {
       })
       .catch(console.log("Couldn't load posts"));
   }, []);
+  if (!posts) return <Text>Loading...</Text>;
   return (
     <Box
       border={{ color: "brand", size: "xlarge" }}
@@ -34,26 +37,17 @@ export default function Account() {
       <Text>{firebase.auth().currentUser.email}</Text>
       <AuthButton />
       <Heading>Your Posts</Heading>
-      <Box>
-        {!posts && <Text>Loading...</Text>}
-        {posts &&
-          posts.map((post, index) => {
-            if (post.type === "text") {
-              return <Post key={index} title={post.title} body={post.body} />;
-            } else if (post.type === "image") {
-              return (
-                <ImagePost
-                  key={index}
-                  title={post.title}
-                  imageUrl={post.fileUrl}
-                />
-              );
-            } else {
-              return <Post key={index} title={"Error"} body={"error"} />;
-            }
+
+      {posts.length !== 0 && (
+        <Grid rows="small" columns="medium" gap="small">
+          {posts.map((post, index) => {
+            if (post.type === "text")
+              return <EditTextPost key={index} post={post} />;
+            else return <EditImagePost key={index} post={post} />;
           })}
-        {posts && posts.length === 0 && <Text>No posts :(</Text>}
-      </Box>
+        </Grid>
+      )}
+      {posts.length === 0 && <Text>You haven't posted anything yet!</Text>}
     </Box>
   );
 }

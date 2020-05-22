@@ -12,7 +12,7 @@ const statusTypes = {
   DEFAULT: "default",
 };
 
-export default function Post(post) {
+export default function Post({ post }) {
   const [status, setStatus] = useState(statusTypes.DEFAULT);
   const [isSaved, setIsSaved] = useState(false);
 
