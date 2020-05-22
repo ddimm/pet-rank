@@ -1,33 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Post from "./Post";
+import { Box, Text } from "grommet";
 import { firebase } from "../utils/firebase";
+
+const db = firebase.firestore();
+
 export default function Homepage() {
-  const [data, setData] = useState([]);
+  const [posts, setPosts] = useState();
   useEffect(() => {
-    firebase
-      .firestore()
-      .collection("posts")
-      .limit(20)
-      .get()
-      .then((posts) => {
-        setData(
-          posts.docs.map((value, index) => {
-            return value.data();
-          })
-        );
-      })
-      .catch(() => {
-        console.log("couldn't fetch posts");
+    db.collection("posts").onSnapshot((querySnapshot) => {
+      let postsTemp = [];
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, doc.data());
+        postsTemp.push(doc.data());
       });
+      setPosts(postsTemp);
+    });
   }, []);
-  if (data.length > 0) {
-    return (
-      <div>
-        {data.map((item, index) => {
-          return <pre key={index}>{JSON.stringify(item, null, 4)}</pre>;
+
+  return (
+    <Box>
+      {/* <Post
+        title="This is a title"
+        body="Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit,
+              sed do eiusmod tempor incididunt ut
+              labore et dolore magna aliqua."
+      /> */}
+      {!posts && <Text>Loading...</Text>}
+      {posts &&
+        posts.map((post) => {
+          return <Post title={post.title} body={post.body} />;
         })}
-      </div>
-    );
-  } else {
-    return <div>Posts should go here</div>;
-  }
+      {posts && posts.length === 0 && <Text>No posts :(</Text>}
+    </Box>
+  );
 }

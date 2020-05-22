@@ -17,7 +17,10 @@ import Navbar from "./components/Navbar";
 import Saved from "./components/Saved";
 import { reducer } from "./utils/reducers";
 
-const store = createStore(reducer);
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 const theme = {
   global: {
     colors: { brand: "#228BE6" },
