@@ -1,23 +1,30 @@
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ui, firebase } from "../utils/firebase";
-import { Redirect } from "react-router-dom";
-export default function Login(props) {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const { from } = props.location.state || { from: { pathname: "/" } };
+import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogin } from "../utils/actions";
+export default function Login() {
+  let location = useLocation();
+  let { from } = location.state || { from: { pathname: "/" } };
+  let login = useSelector((state) => state.login);
+  let history = useHistory();
+  let dispatch = useDispatch();
   useEffect(() => {
     ui.start("#firebaseui-auth-container", {
       signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
       callbacks: {
         signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-          setLoggedIn(true);
-          return true;
+          dispatch(setLogin(!!authResult));
+          history.replace(from);
+          return false;
         },
       },
+      signInFlow: "popup",
     });
-  }, []);
-  if (loggedIn) {
-    return <Redirect to={from} />;
+  }, [history, dispatch, from]);
+  if (!login) {
+    return <div id={"firebaseui-auth-container"}></div>;
+  } else {
+    return <React.Fragment></React.Fragment>;
   }
-  return <div id={"firebaseui-auth-container"}></div>;
 }
