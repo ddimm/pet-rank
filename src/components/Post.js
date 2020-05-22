@@ -25,13 +25,71 @@ export default function Post(post) {
   };
 
   const handleLike = () => {
-    if (isLiked()) setStatus(statusTypes.DEFAULT);
-    else setStatus(statusTypes.LIKED);
+    switch (status) {
+      case statusTypes.LIKED: {
+        db.collection("posts")
+          .doc(post.id)
+          .update({ points: post.points - 1 })
+          .then(console.log("Successfully undid upvote"))
+          .catch(console.log("Couldn't undo upvote"));
+        setStatus(statusTypes.DEFAULT);
+        post.points--;
+        break;
+      }
+      case statusTypes.DISLIKED: {
+        db.collection("posts")
+          .doc(post.id)
+          .update({ points: post.points + 2 })
+          .then(console.log("Successfully changed downvote to upvote"))
+          .catch(console.log("Couldn't change downvote to upvote"));
+        setStatus(statusTypes.LIKED);
+        post.points += 2;
+        break;
+      }
+      default: {
+        db.collection("posts")
+          .doc(post.id)
+          .update({ points: post.points + 1 })
+          .then(console.log("Successfully upvoted"))
+          .catch(console.log("Couldn't upvote"));
+        setStatus(statusTypes.LIKED);
+        post.points++;
+      }
+    }
   };
 
   const handleDislike = () => {
-    if (isDisliked()) setStatus(statusTypes.DEFAULT);
-    else setStatus(statusTypes.DISLIKED);
+    switch (status) {
+      case statusTypes.LIKED: {
+        db.collection("posts")
+          .doc(post.id)
+          .update({ points: post.points - 2 })
+          .then(console.log("Successfully changed upvote to downvote"))
+          .catch(console.log("Couldn't change upvote to downvote"));
+        setStatus(statusTypes.DISLIKED);
+        post.points -= 2;
+        break;
+      }
+      case statusTypes.DISLIKED: {
+        db.collection("posts")
+          .doc(post.id)
+          .update({ points: post.points + 1 })
+          .then(console.log("Successfully undid downvote"))
+          .catch(console.log("Couldn't undo downvote"));
+        setStatus(statusTypes.DEFAULT);
+        post.points++;
+        break;
+      }
+      default: {
+        db.collection("posts")
+          .doc(post.id)
+          .update({ points: post.points - 1 })
+          .then(console.log("Successfully downvoted"))
+          .catch(console.log("Couldn't downvote"));
+        setStatus(statusTypes.DISLIKED);
+        post.points--;
+      }
+    }
   };
 
   const handleSave = () => {
