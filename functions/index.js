@@ -3,14 +3,14 @@ const admin = require("firebase-admin");
 
 admin.initializeApp();
 
-exports.updatePoints = functions.pubsub
+exports.updatePointsOnHour = functions.pubsub
   .schedule("every 5 minutes")
   .onRun((context) => {
     console.log(context);
     let db = admin.firestore();
     let batch = db.batch();
     let postRef = db.collection("posts");
-    postRef
+    return postRef
       .where(
         "dateCreated",
         "<",
@@ -29,6 +29,6 @@ exports.updatePoints = functions.pubsub
         return batch.commit();
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
       });
   });
