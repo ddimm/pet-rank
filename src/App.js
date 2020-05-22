@@ -52,6 +52,7 @@ function App() {
                 <PrivateRoute exact path="/account">
                   <Account />
                 </PrivateRoute>
+                <Route component={Default} />
               </Switch>
             </Box>
           </Box>
@@ -77,6 +78,10 @@ function PrivateRoute({ children, ...rest }) {
       }}
     />
   );
+}
+
+function Default() {
+  return <h1>Nothing Here</h1>;
 }
 
 export default App;
