@@ -17,12 +17,13 @@ export default function Navbar() {
       .firestore()
       .collection("posts")
       .orderBy("points", "desc")
-      .onSnapshot((docs) => {
+      .get()
+      .then((docs) => {
         dispatch(
           setPosts(
             docs.docs.map((doc) => {
               console.log(doc.data());
-              return doc.data();
+              return { ...doc.data(), id: doc.id };
             })
           )
         );
