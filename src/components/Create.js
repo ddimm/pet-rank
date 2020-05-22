@@ -9,7 +9,8 @@ import {
   FormField,
   TextInput,
 } from "grommet";
-
+import { firebase } from "../utils/firebase";
+import { v4 as uuidv4 } from "uuid";
 export default function Create() {
   const [textPost, setTextPost] = useState({ title: "", body: "" });
   const [imagePost, setImagePost] = useState({ title: "" });
@@ -19,6 +20,22 @@ export default function Create() {
   };
   const handleTextSubmit = () => {
     console.log(textPost);
+    //write post to firestore
+    firebase
+      .firestore()
+      .collection("posts")
+      .doc(uuidv4())
+      .set({
+        userId: firebase.auth().currentUser.uid,
+        dateCreated: firebase.firestore.Timestamp.fromDate(new Date()),
+        ...textPost,
+      })
+      .then(() => {
+        console.log("text post submitted");
+      })
+      .catch(() => {
+        console.log("text post not submitted");
+      });
   };
 
   const handleImageChange = (nextValue) => {
