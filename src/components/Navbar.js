@@ -1,10 +1,10 @@
+import { Button, Header } from "grommet";
+import { Bookmark, Home, Upload, User } from "grommet-icons";
 import React from "react";
-import { Header, Button } from "grommet";
-import { Home, User, Bookmark, Upload } from "grommet-icons";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { firebase } from "../utils/firebase";
+import { Link } from "react-router-dom";
 import { setLogin } from "../utils/actions";
+import { firebase } from "../utils/firebase";
 export default function Navbar() {
   let dispatch = useDispatch();
   firebase.auth().onAuthStateChanged((user) => {

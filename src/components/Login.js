@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { ui, firebase } from "../utils/firebase";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../utils/actions";
 export default function Login() {
@@ -24,7 +24,7 @@ export default function Login() {
   }, [history, dispatch, from]);
   if (!login) {
     return <div id={"firebaseui-auth-container"}></div>;
-  } else {
-    return <React.Fragment></React.Fragment>;
+  } else if (location.state) {
+    return <Redirect to={from} />;
   }
 }
