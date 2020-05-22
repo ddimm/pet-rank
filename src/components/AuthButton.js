@@ -2,29 +2,30 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { firebase } from "../utils/firebase";
+import { Button } from "grommet";
 export default function AuthButton() {
   let history = useHistory();
   let login = useSelector((state) => state.login);
   if (login) {
     return (
-      <button
+      <Button
+        primary
         onClick={() => {
           firebase.auth().signOut();
           history.push("/");
         }}
-      >
-        sign out
-      </button>
+        label="sign out"
+      />
     );
   } else {
     return (
-      <button
+      <Button
         onClick={() => {
           history.push("/login");
         }}
-      >
-        sign in
-      </button>
+        label="sign in"
+        primary
+      />
     );
   }
 }

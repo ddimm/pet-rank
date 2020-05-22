@@ -3,6 +3,7 @@ import { ui, firebase } from "../utils/firebase";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../utils/actions";
+import { Box } from "grommet";
 export default function Login() {
   let location = useLocation();
   let { from } = location.state || { from: { pathname: "/" } };
@@ -23,7 +24,7 @@ export default function Login() {
     });
   }, [history, dispatch, from]);
   if (!login) {
-    return <div id={"firebaseui-auth-container"}></div>;
+    return <Box id={"firebaseui-auth-container"}></Box>;
   } else if (location.state) {
     return <Redirect to={from} />;
   }
