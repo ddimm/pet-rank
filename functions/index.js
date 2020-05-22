@@ -29,6 +29,7 @@ exports.updatePointsOnHour = functions.pubsub
         return batch.commit();
       })
       .catch((err) => {
-        console.log(JSON.stringify(err, undefined, 4));
+        console.error("error");
+        console.error(JSON.stringify(err, undefined, 4));
       });
   });
