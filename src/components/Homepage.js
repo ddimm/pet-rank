@@ -7,8 +7,6 @@ import ImagePost from "./ImagePost";
 const db = firebase.firestore();
 
 export default function Homepage() {
-  // const login = useSelector((state) => state.login);
-
   const [posts, setPosts] = useState();
   useEffect(() => {
     db.collection("posts")
