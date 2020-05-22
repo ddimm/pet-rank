@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setLogin } from "../utils/actions";
 import { firebase } from "../utils/firebase";
+
 export default function Navbar() {
   let dispatch = useDispatch();
   firebase.auth().onAuthStateChanged((user) => {
